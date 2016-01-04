@@ -72,16 +72,25 @@ public class Journal implements Comparable<Journal>{
     }
 
     @Override
-    public int compareTo(Journal o) {
-        if(v > o.getV())
+    public int compareTo(Journal j) {
+        if(v > j.getV())
             return 1;
-        else if(v < o.getV())
+        else if(v < j.getV())
             return -1;
         else
-        return 0;
+            return 0;
     }
 
     public String toString(){
         return name + " (" + acceptanceRate + ", " + subToPub + ", " + expectedNumOfCitations + ")";
+    }
+
+    public boolean equals(Object j){
+        if(j instanceof Journal) {
+            Journal journal = (Journal) j;
+            return name.equals(journal.getName());
+        }
+        else
+            return false;
     }
 }
