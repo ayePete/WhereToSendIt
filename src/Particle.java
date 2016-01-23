@@ -65,7 +65,7 @@ public class Particle {
         velocity  = new ArrayList<>();
         generateVelocity();
         sigmaVector = new ArrayList<>();
-        updateSigmaVector();
+        updateSigmaP();
     }
 
     public Particle(ArrayList<Integer> position){
@@ -83,7 +83,7 @@ public class Particle {
         velocity  = new ArrayList<>();
         generateVelocity();
         sigmaVector =  new ArrayList<>();
-        updateSigmaVector();
+        updateSigmaP();
     }
 
     public static ArrayList<Journal> decodeSequence(ArrayList<Integer> position){
@@ -126,7 +126,7 @@ public class Particle {
         c = computeC(journalSequence);
         r = computeR(journalSequence);
         p = computeP(journalSequence);
-        updateSigmaVector();
+        updateSigmaP();
     }
 
     public ArrayList<Integer> getPBest() {

@@ -14,9 +14,19 @@ public class Test {
     public static void main(String[] args){
         Main.readData();
         ArrayList<Journal> journals = new ArrayList<>(Main.journals);
-        randomTests(journals);
+//        randomTests(journals);
+        //testGrowthTrend();
+        printVRankings(journals);
+    }
 
-
+    public static void testGrowthTrend(){
+        double sum = 0;
+        ArrayList<Journal> journals = new ArrayList<>();
+        for (int i = 0; i < Main.N; i++) {
+            journals.add(Main.journals.get(i));
+            sum = Particle.computeC(journals);
+            System.out.println(sum);
+        }
     }
 
     public static void printVRankings(ArrayList<Journal> journals){
@@ -90,7 +100,7 @@ public class Test {
         });*/
         Collections.reverse(journals);
         System.out.println(journals);
-        System.out.println(Particle.computeC(journals));
+        //System.out.println(Particle.computeC(journals));
         System.out.println(Particle.computeR(journals));
 
        /* j1 = journals.get(0);
