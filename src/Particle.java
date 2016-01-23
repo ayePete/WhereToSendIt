@@ -12,6 +12,7 @@ public class Particle {
     private double c;
     private double r;
     private double p;
+    private ArrayList<Double> sigmaVector = new ArrayList<>();
     public ArrayList<Journal> journalSequence;
     public static int a;
     public static int b;
@@ -37,6 +38,7 @@ public class Particle {
         pBest = new ArrayList<>(position);
         velocity  = new ArrayList<>();
         generateVelocity();
+        sigmaVector = new ArrayList<>();
     }
 
     public Particle(int n){
@@ -62,8 +64,8 @@ public class Particle {
         p = computeP(journalSequence);
         velocity  = new ArrayList<>();
         generateVelocity();
-        updateSigmaP();
-
+        sigmaVector = new ArrayList<>();
+        updateSigmaVector();
     }
 
     public Particle(ArrayList<Integer> position){
@@ -80,7 +82,8 @@ public class Particle {
         p = computeP(journalSequence);
         velocity  = new ArrayList<>();
         generateVelocity();
-        updateSigmaP();
+        sigmaVector =  new ArrayList<>();
+        updateSigmaVector();
     }
 
     public static ArrayList<Journal> decodeSequence(ArrayList<Integer> position){
@@ -123,7 +126,7 @@ public class Particle {
         c = computeC(journalSequence);
         r = computeR(journalSequence);
         p = computeP(journalSequence);
-        updateSigmaP();
+        updateSigmaVector();
     }
 
     public ArrayList<Integer> getPBest() {
@@ -263,6 +266,26 @@ public class Particle {
     public void updateSigmaP(){
         sigmaValue = (Math.pow((Main.minP * c), 2) - Math.pow((Main.maxC * p), 2))
                 / (Math.pow((Main.minP * c), 2) + Math.pow((Main.maxC * p), 2));
+    }
+
+    public void updateSigmaVector(){
+        sigmaValue = (Math.pow(c, 2) - Math.pow(p, 2))
+                / (Math.pow(c, 2) + Math.pow(p, 2) + Math.pow(r, 2));
+        sigmaVector.add(sigmaValue);
+
+        sigmaValue = (Math.pow(p, 2) - Math.pow(r, 2))
+                / (Math.pow(c, 2) + Math.pow(p, 2) + Math.pow(r, 2));
+        sigmaVector.add(sigmaValue);
+
+        sigmaValue = (Math.pow(r, 2) - Math.pow(c, 2))
+                / (Math.pow(c, 2) + Math.pow(p, 2) + Math.pow(r, 2));
+        sigmaVector.add(sigmaValue);
+
+        sigmaValue = 0;
+
+        for(Double d: sigmaVector){
+            sigmaValue += d;
+        }
     }
 
     public boolean equals (Object obj){

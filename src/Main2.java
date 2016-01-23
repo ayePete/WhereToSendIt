@@ -1,9 +1,10 @@
+/*
 import javafx.util.Pair;
 
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class Main2 {
 
     public static final int N = 61;
     public static ArrayList<Journal> journals;
@@ -67,37 +68,51 @@ public class Main {
                     if (i == j) continue;
                     mutableJournalList = (ArrayList<Journal>) journals.clone();
 
-                    /** Swapping the journal positions based on their original positions **/
+                    */
+/** Swapping the journal positions based on their original positions **//*
 
-                    /** Get the new journals to be placed at the top**/
+
+                    */
+/** Get the new journals to be placed at the top**//*
+
                     Journal new1 = journals.get(i);
                     Journal new2 = journals.get(j);
 
-                    /** Get their indices in the mutableJournalList**/
+                    */
+/** Get their indices in the mutableJournalList**//*
+
                     int newIndex1 = mutableJournalList.indexOf(new1);
                     int newIndex2 = mutableJournalList.indexOf(new2);
 
-                    /** Get the journals to be overwritten at the head of the submission sequence **/
+                    */
+/** Get the journals to be overwritten at the head of the submission sequence **//*
+
                     Journal old1 = mutableJournalList.get(1);
                     Journal old2 = mutableJournalList.get(2);
 
-                    /** Place the new journals at the top, overwriting the old ones **/
+                    */
+/** Place the new journals at the top, overwriting the old ones **//*
+
                     mutableJournalList.set(1, new1);
                     mutableJournalList.set(2, new2);
 
-                    /** Place the overwritten journals in the indices of the ones placed at the top **/
+                    */
+/** Place the overwritten journals in the indices of the ones placed at the top **//*
+
                     mutableJournalList.set(newIndex1, old1);
                     mutableJournalList.set(newIndex2, old2);
 
-                    double p = Particle.computeP(mutableJournalList);
+                    double r = Particle.computeR(mutableJournalList);
                     double c = Particle.computeC(mutableJournalList);
                     ArrayList<ArrayList<Journal>> allSequences = new ArrayList<>();
-                    //allSequences.add(mutableJournalList);
+                    allSequences.add(mutableJournalList);
                     //pw.println(mutableJournalList.get(1).getName() + "," + c + "," + r);
-                    //results.add(new Pair<>(c, p));
+                    results.add(new Pair<>(c, r));
 
                     for (int k = 0; ;) {
-                       /** Swap two journals in random positions **/
+                       */
+/** Swap two journals in random positions **//*
+
                         int rIndex1 = 2 + rand.nextInt(59);
                         int rIndex2 = 2 + rand.nextInt(59);
                         Journal temp = mutableJournalList.get(rIndex1);
@@ -105,21 +120,21 @@ public class Main {
                         mutableJournalList.set(rIndex1, j1);
                         mutableJournalList.set(rIndex2, temp);
 
-                        double newP = Particle.computeP(mutableJournalList);
+                        double newR = Particle.computeR(mutableJournalList);
                         double newC = Particle.computeC(mutableJournalList);
 
                         double acceptProbC = (newC / c);
-                        double acceptProbP = (p / newP);
+                        double acceptProbR = (r / newR);
                         double uProb = rand.nextDouble();
 
                         //results.add(new Pair<>(newC, newR));
                         //allSequences.add(mutableJournalList);
                         //pw.println(mutableJournalList.get(1).getName() + "|" + newC + "|" + newR);
                         //System.out.println(mutableJournalList.get(1).getName() + "," + newC + "," + newR);
-                        if (uProb < acceptProbC && uProb < acceptProbP) {
-                            pw.println(mutableJournalList.get(1).getName() + "|" + newC + "|" + newP);
-                            System.out.println(mutableJournalList.get(1).getName() + "," + newC + "," + newP);
-                            p = newP;
+                        if (uProb < acceptProbC && uProb < acceptProbR) {
+                            pw.println(mutableJournalList.get(1).getName() + "|" + newC + "|" + newR);
+                            System.out.println(mutableJournalList.get(1).getName() + "," + newC + "," + newR);
+                            r = newR;
                             c = newC;
                             k++;
                             if (k > 850)
@@ -169,27 +184,30 @@ public class Main {
                 //improvedMinC.add("New run");
                 //improvedMinR.add("New run");
                 System.out.println("Run " + (k + 1) + ":");
-                pw.println("Run " + (k + 1) + ":");
+                //pw.println("Run " + (k + 1) + ":");
                 init();
                 search();
                 combinedExternalArchive.addAll(externalArchive);
                 System.out.println("Result: ");
                 //pw.println("Result: ");
                 for (Particle p : externalArchive) {
-                    System.out.println(p.getPosition() + ": C = " + p.getC() + " P = " + p.getP() + " " + p.getJournalSequence().get(0).getName());
-                    /*pw.print(p.getPosition() + ":\t" + p.getC() + "\t" + p.getP() + "\t");
+                    System.out.println(p.getPosition() + ": C = " + p.getC() + " P = " + p.getP() + " " + " R = " + p.getR() + " " + p.getJournalSequence().get(0).getName());
+                    */
+/*pw.print(p.getPosition() + ":\t" + p.getC() + "\t" + p.getP() + "\t");
                     for (int l = 0; l < 5; l++) {
                         pw.print(p.getJournalSequence().get(l).getName() + ", ");
                     }
-                    pw.println(p.getJournalSequence().get(5).getName());
-*/
+                    pw.println(p.getJournalSequence().get(5).getName());*//*
+
+
                 }
                 System.out.println();
-//                pw.println();
+                //pw.println();
 
 
 
-                /** Start subswarm search *
+                */
+/** Start subswarm search *
                  MUTATION_RATE = 0.5;
                  int j = 0;
                  swarm.clear();
@@ -221,14 +239,15 @@ public class Main {
 
                  }
                  System.out.println();
-                 pw.println();*/
+                 pw.println();*//*
+
             }
 
             updateExternalArchive(combinedExternalArchive);
             System.out.println("Combined Result: ");
             pw.println("Sequence\tC\tP\tR\tFirst\tOthers");
             for (Particle p : combinedExternalArchive) {
-                System.out.println(p.getPosition() + ": C = " + p.getC() + " P = " + p.getP() + " " + " R = " + p.getR() + " " + p.getJournalSequence().get(0).getName());
+                System.out.println(p.getPosition() + ": C = " + p.getC() + " " + " P = " + p.getP() + " R = " + p.getR() + " " + p.getJournalSequence().get(0).getName());
                 pw.print(p.getPosition() + "\t" + p.getC() + "\t" + p.getP() + "\t" + p.getR() + "\t");
                 pw.print(p.getJournalSequence().get(0).getName() + "\t");
                 for (int l = 1; l < 5; l++) {
@@ -259,7 +278,9 @@ public class Main {
                 r1 = round(rand.nextDouble(), DP);
                 r2 = round(rand.nextDouble(), DP);
 
-                /** Selection of Leader **/
+                */
+/** Selection of Leader **//*
+
                 Particle leader = selectLeader(p);
 
                 // Get differences between X and pBest and X and gBest
@@ -340,30 +361,39 @@ public class Main {
                 ArrayList<Integer> newPositionList = new ArrayList<>(Arrays.asList(newPosition));
 
 
-                /** Update of pBest **/
+                */
+/** Update of pBest **//*
+
                 double prevC = Particle.computeC(Particle.decodeSequence(p.getPBest()));
                 double prevP = Particle.computeP(Particle.decodeSequence(p.getPBest()));
+                double prevR = Particle.computeR(Particle.decodeSequence(p.getPBest()));
                 //System.out.println(newPositionList);
                 p.setPosition(newPositionList);
                 p.generateVelocity();
 
-                if (p.getC()/epsPlus >= prevC || p.getP()/epsPlus <= prevP) {
+                if (p.getC()/epsPlus >= prevC || p.getP()/epsPlus <= prevP|| p.getR()/epsPlus <= prevR) {
                     p.updatePBest();
                     if(!isInExternalArchive(p))
                         externalArchive.add(new Particle(p));
                 }
-                /** Mutation **/
+                */
+/** Mutation **//*
+
                 if (rand.nextDouble() < MUTATION_RATE) {
                     int toMutate1 = rand.nextInt(particleSize);
                     int toMutate2 = rand.nextInt(particleSize);
 
-                    /* Randomly swap a position with the leading position*/
+                    */
+/* Randomly swap a position with the leading position*//*
+
                     int temp = p.getPosition().get(0);
                     p.getPosition().set(0, newPositionList.get(toMutate1));
                     p.getPosition().set(toMutate1, temp);
 
 
-                    /* Randomly swap any two positions */
+                    */
+/* Randomly swap any two positions *//*
+
                     toMutate1 = rand.nextInt(particleSize);
                     temp = p.getPosition().get(toMutate1);
                     p.getPosition().set(toMutate1, newPositionList.get(toMutate2));
@@ -372,7 +402,9 @@ public class Main {
                 }
 
                 if(i % 10 == 0){
-                    /* Randomly swap positions */
+                    */
+/* Randomly swap positions *//*
+
                     for (int j = 0; j < 5; j++) {
                         int toMutate1 = rand.nextInt(particleSize);
                         int temp = p.getPosition().get(j);
@@ -392,7 +424,9 @@ public class Main {
         for (int i = 0; i < swarm.size(); i++) {
             Particle p1 = swarm.get(i);
 
-            /** Update min objective values for sigma value calculation **/
+            */
+/** Update min objective values for sigma value calculation **//*
+
             if (p1.getC() > maxC) {
                 maxC = p1.getC();
                 //improvedMinC.add("iExpected Cost: " + p1.getC() + " Variance: " + p1.getR());
@@ -412,16 +446,22 @@ public class Main {
                 Particle p2 = swarm.get(j);
                 if (p1.equals(p2))
                     continue;
-                /*System.out.println("p1: " + p1);
+                */
+/*System.out.println("p1: " + p1);
                 System.out.println(p1.getC() + ", " + p1.getR());
                 System.out.println("p2: " + p2);
-                System.out.println(p2.getC() + ", " + p2.getR());*/
-                /** Checking for epsilon-non-dominance **/
+                System.out.println(p2.getC() + ", " + p2.getR());*//*
+
+                */
+/** Checking for epsilon-non-dominance **//*
+
                 if (p2.getC() > p1.getC() && p2.getP() < p1.getP() && p2.getR() < p1.getR()) {
                     continue outerLoop;
                 }
             }
-            /** Add epsilon-non-dominated candidate to external archive **/
+            */
+/** Add epsilon-non-dominated candidate to external archive **//*
+
             if (!isInExternalArchive(p1) || externalArchive.isEmpty()) {
                 externalArchive.add(new Particle(p1));
             }
@@ -432,7 +472,9 @@ public class Main {
         outerLoop: for (int i = 0; i < externalArchive.size(); i++) {
             Particle p1 = externalArchive.get(i);
 
-            /** Update min objective values for sigma value calculation **/
+            */
+/** Update min objective values for sigma value calculation **//*
+
             if (p1.getC() > maxC) {
                 maxC = p1.getC();
                 //improvedMinC.add("vExpected Cost: " + p1.getC() + " Variance: " + p1.getR());
@@ -452,19 +494,21 @@ public class Main {
                 Particle p2 = externalArchive.get(j);
                 if(p1.equals(p2))
                     continue;
-                /** Checking for and removing epsilon-dominated candidates **/
+                */
+/** Checking for and removing epsilon-dominated candidates **//*
+
                 if(p2.getC()/epsPlus > p1.getC() && p2.getP()/epsPlus < p1.getP() && p2.getR()/epsPlus < p1.getR()){
 //                    System.out.println("Removing: " + p1 + " " + p1.getC() + " " + p1.getR());
 //                    System.out.println("Dominated by: " + p2 + " " + p2.getC() + " " + p2.getR());
                     externalArchive.remove(p1);
                     i = 0;
                     continue outerLoop;
-                } else if(p1.getC()/epsPlus > p2.getC() && p1.getP()/epsPlus < p2.getP() && p2.getR()/epsPlus < p1.getR()){
+                } else if(p1.getC()/epsPlus > p2.getC() && p2.getP()/epsPlus < p1.getP() && p2.getR()/epsPlus < p1.getR()){
                     externalArchive.remove(p2);
                 }
             }
         }
-        Main.externalArchive = new ArrayList<>(externalArchive);
+        Main2.externalArchive = new ArrayList<>(externalArchive);
     }
 
     private static void init() {
@@ -487,7 +531,7 @@ public class Main {
 
     private static boolean isInExternalArchive(Particle p) {
         for (Particle p1: externalArchive){
-            if (p.getC() == p1.getC() && p.getP() == p1.getP())
+            if (p.getC() == p1.getC() && p.getP() == p1.getP()&& p.getR() == p1.getR())
                 return true;
         }
         return false;
@@ -577,4 +621,4 @@ public class Main {
         lon = ((long) (d2 + 0.5) > lon) ? lon + 1 : lon;
         return (lon) / n;
     }
-}
+}*/
