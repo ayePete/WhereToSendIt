@@ -163,7 +163,7 @@ public class Main {
                 combinedExternalArchive.addAll(externalArchive);
                 System.out.println("Result: ");
                 for (Particle p : externalArchive) {
-                    System.out.println(p.getPosition() + ": C = " + p.getC() + " P = " + p.getP() + " " + p.getJournalSequence().get(0).getName());
+                    System.out.println(p.getPosition() + ": C = " + p.getC() + " R = " + p.getP() + " " + p.getJournalSequence().get(0).getName());
                     /*pw.print(p.getPosition() + ":\t" + p.getC() + "\t" + p.getR() + "\t");
                     for (int l = 0; l < 5; l++) {
                         pw.print(p.getJournalSequence().get(l).getName() + ", ");
@@ -214,10 +214,10 @@ public class Main {
             updateExternalArchive(combinedExternalArchive);
             System.out.println("Combined Result: ");
             //pw.println("Combined Result: ");
-            pw.println("Sequence\tC\tP\tFirst\tOthers");
+            pw.println("Sequence\tC\tR\tFirst\tOthers");
             for (Particle p : combinedExternalArchive) {
-                System.out.println(p.getPosition() + ": C = " + p.getC() + " P = " + p.getP() + " " + p.getJournalSequence().get(0).getName());
-                pw.print(p.getPosition() + "\t" + p.getC() + "\t" + p.getP() + "\t");
+                System.out.println(p.getPosition() + ": C = " + p.getC() + " R = " + p.getR() + " " + p.getJournalSequence().get(0).getName());
+                pw.print(p.getPosition() + "\t" + p.getC() + "\t" + p.getR() + "\t");
                 pw.print(p.getJournalSequence().get(0).getName() + "\t");
                 for (int l = 1; l < 5; l++) {
                     pw.print(p.getJournalSequence().get(l).getName() + ", ");
@@ -330,12 +330,12 @@ public class Main {
 
                 /** Update of pBest **/
                 double prevC = Particle.computeC(Particle.decodeSequence(p.getPBest()));
-                double prevP = Particle.computeP(Particle.decodeSequence(p.getPBest()));
+                double prevR = Particle.computeR(Particle.decodeSequence(p.getPBest()));
                 //System.out.println(newPositionList);
                 p.setPosition(newPositionList);
                 p.generateVelocity();
 
-                if (p.getC()/epsPlus >= prevC || p.getP()/epsPlus <= prevP) {
+                if (p.getC()/epsPlus >= prevC || p.getR()/epsPlus <= prevR) {
                     p.updatePBest();
                     if(!isInExternalArchive(p))
                         externalArchive.add(new Particle(p));
@@ -349,7 +349,6 @@ public class Main {
                     int temp = p.getPosition().get(0);
                     p.getPosition().set(0, newPositionList.get(toMutate1));
                     p.getPosition().set(toMutate1, temp);
-
 
                     /* Randomly swap any two positions */
                     toMutate1 = rand.nextInt(particleSize);
@@ -385,8 +384,8 @@ public class Main {
                 maxC = p1.getC();
                 //improvedMinC.add("iExpected Cost: " + p1.getC() + " Variance: " + p1.getR());
             }
-            if (p1.getP() < minP) {
-                minP = p1.getR();
+            if (p1.getR() < minR) {
+                minR = p1.getR();
                 //improvedMinR.add("iExpected Cost: " + p1.getC() + " Variance: " + p1.getP());
             }
 
@@ -400,7 +399,7 @@ public class Main {
                 System.out.println("p2: " + p2);
                 System.out.println(p2.getC() + ", " + p2.getR());*/
                 /** Checking for epsilon-non-dominance **/
-                if (p2.getC() > p1.getC() && p2.getP() < p1.getP()) {
+                if (p2.getC() > p1.getC() && p2.getR() < p1.getR()) {
                     continue outerLoop;
                 }
             }
@@ -420,8 +419,8 @@ public class Main {
                 maxC = p1.getC();
                 //improvedMinC.add("vExpected Cost: " + p1.getC() + " Variance: " + p1.getR());
             }
-            if (p1.getP() < minP) {
-                minP = p1.getP();
+            if (p1.getR() < minR) {
+                minR = p1.getR();
                 //improvedMinR.add("vExpected Cost: " + p1.getC() + " Variance: " + p1.getR());
             }
 
@@ -431,13 +430,13 @@ public class Main {
                 if(p1.equals(p2))
                     continue;
                 /** Checking for and removing epsilon-dominated candidates **/
-                if(p2.getC()/epsPlus > p1.getC() && p2.getP()/epsPlus < p1.getP()){
+                if(p2.getC()/epsPlus > p1.getC() && p2.getR()/epsPlus < p1.getR()){
 //                    System.out.println("Removing: " + p1 + " " + p1.getC() + " " + p1.getR());
 //                    System.out.println("Dominated by: " + p2 + " " + p2.getC() + " " + p2.getR());
                     externalArchive.remove(p1);
                     i = 0;
                     continue outerLoop;
-                } else if(p1.getC()/epsPlus > p2.getC() && p1.getP()/epsPlus < p2.getP()){
+                } else if(p1.getC()/epsPlus > p2.getC() && p1.getR()/epsPlus < p2.getR()){
                     externalArchive.remove(p2);
                 }
             }
